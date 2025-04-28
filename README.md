@@ -2,8 +2,6 @@
 
 A futuristic, dark-themed chat interface for interacting with Ollama's Llama 3 model.
 
-![LUMI AI Chat Interface](https://placeholder.svg?height=400&width=800)
-
 ## Features
 
 - 🤖 Integration with Ollama's Llama 3 model
@@ -24,8 +22,8 @@ Before you begin, ensure you have the following installed:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/lumi-ai-chat.git
-   cd lumi-ai-chat
+   git clone https://github.com/cannoahgkt/Lumi.git
+   cd lumi
    ```
 
 2. Install dependencies:
