@@ -2,9 +2,11 @@
 const nextConfig = {
   output: 'export',
   images: {
-    unoptimized: true
+    unoptimized: true,
   },
-  trailingSlash: true
-}
+  basePath: '/Lumi',
+  assetPrefix: '/Lumi/',
+  trailingSlash: true,
+};
 
 export default nextConfig;
