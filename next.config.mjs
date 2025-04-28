@@ -4,9 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/Lumi',
-  assetPrefix: '/Lumi/',
-  trailingSlash: true,
+  basePath: process.env.NODE_ENV === 'production' ? '/Lumi' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Lumi/' : '',
 };
 
 export default nextConfig;
