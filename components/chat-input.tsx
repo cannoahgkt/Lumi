@@ -124,58 +124,60 @@ export default function ChatInput({ input, handleInputChange, handleSubmit, isLo
         </div>
       )}
       
-      <div className="flex items-center gap-2 bg-[#1a1a1a]/60 rounded-full border border-[#9c6bff]/20 px-2">
-        <button 
-          type="button" 
-          onClick={handleFileClick}
-          className="p-2 rounded-full hover:bg-white/5 transition-all text-[#e0e0e0]/50"
-          aria-label="Upload file"
-        >
-          <Paperclip className="w-5 h-5" />
-        </button>
-        
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          onChange={handleFileChange} 
-          className="hidden" 
-          accept="image/*,.pdf,.doc,.docx,.txt"
-          name="file"
-        />
+      <div className="flex items-center gap-3">
+        <div className="flex-1 flex items-center gap-2 bg-[#1a1a1a]/60 rounded-full border border-[#9c6bff]/20 px-2">
+          <button 
+            type="button" 
+            onClick={handleFileClick}
+            className="p-2 rounded-full hover:bg-white/5 transition-all text-[#e0e0e0]/50"
+            aria-label="Upload file"
+          >
+            <Paperclip className="w-5 h-5" />
+          </button>
+          
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleFileChange} 
+            className="hidden" 
+            accept="image/*,.pdf,.doc,.docx,.txt"
+            name="file"
+          />
 
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => handleInputChange(e as any)}
-          placeholder="Ask anything..."
-          className="flex-1 bg-transparent border-none outline-none text-[#e0e0e0] placeholder:text-[#e0e0e0]/30 py-2"
-          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault()
-              if (input.trim() || selectedFile) {
-                handleSubmit(e as any)
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => handleInputChange(e as any)}
+            placeholder="Ask anything..."
+            className="flex-1 bg-transparent border-none outline-none text-[#e0e0e0] placeholder:text-[#e0e0e0]/30 py-2"
+            onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault()
+                if (input.trim() || selectedFile) {
+                  handleSubmit(e as any)
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
 
-        <button 
-          type="button" 
-          onClick={startListening}
-          className={`p-2 rounded-full transition-all ${
-            isListening 
-              ? 'bg-[#9c6bff]/30 text-[#9c6bff]' 
-              : 'hover:bg-white/5 text-[#e0e0e0]/50'
-          }`}
-          aria-label="Voice input"
-        >
-          <Mic className="w-5 h-5" />
-        </button>
+          <button 
+            type="button" 
+            onClick={startListening}
+            className={`p-2 rounded-full transition-all ${
+              isListening 
+                ? 'bg-[#9c6bff]/30 text-[#9c6bff]' 
+                : 'hover:bg-white/5 text-[#e0e0e0]/50'
+            }`}
+            aria-label="Voice input"
+          >
+            <Mic className="w-5 h-5" />
+          </button>
+        </div>
 
         <button
           type="submit"
           disabled={(!input.trim() && !selectedFile) || isLoading}
-          className="p-2 rounded-full bg-[#9c6bff] text-white disabled:opacity-50 hover:bg-[#8a2be2] transition-all disabled:hover:bg-[#9c6bff]"
+          className="p-3 rounded-full bg-[#9c6bff] text-white disabled:opacity-50 hover:bg-[#8a2be2] transition-all disabled:hover:bg-[#9c6bff] shadow-[0_0_10px_rgba(156,107,255,0.3)]"
           aria-label="Send message"
         >
           <SendHorizonal className="w-5 h-5" />
