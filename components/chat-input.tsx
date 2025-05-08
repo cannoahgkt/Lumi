@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { SendHorizonal, Mic, Paperclip, X } from "lucide-react"
+import { SendHorizonal, Mic, Paperclip, X } from 'lucide-react'
 import type { FormEvent, ChangeEvent, KeyboardEvent } from "react"
 
 interface ChatInputProps {
@@ -94,7 +94,6 @@ export default function ChatInput({ input, handleInputChange, handleSubmit, isLo
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // If there's a file, you would handle it here
     if (input.trim() || selectedFile) {
       handleSubmit(e)
       removeFile()
@@ -115,66 +114,71 @@ export default function ChatInput({ input, handleInputChange, handleSubmit, isLo
             )}
             <span className="text-sm text-[#e0e0e0] truncate max-w-[200px]">{selectedFile.name}</span>
           </div>
-          <button type="button" onClick={removeFile} className="p-1 hover:bg-[#2a2a2a] rounded-full">
+          <button 
+            type="button" 
+            onClick={removeFile}
+            className="p-1 hover:bg-[#2a2a2a] rounded-full"
+          >
             <X className="w-4 h-4 text-[#e0e0e0]/70" />
           </button>
         </div>
       )}
-
-      <div className="flex items-end gap-2">
-        <button type="button" onClick={handleFileClick} className="p-2 rounded-full hover:bg-white/5 transition-all">
-          <Paperclip className="w-5 h-5 text-[#e0e0e0]/50" />
+      
+      <div className="flex items-center gap-2 bg-[#1a1a1a]/60 rounded-full border border-[#9c6bff]/20 px-2">
+        <button 
+          type="button" 
+          onClick={handleFileClick}
+          className="p-2 rounded-full hover:bg-white/5 transition-all text-[#e0e0e0]/50"
+          aria-label="Upload file"
+        >
+          <Paperclip className="w-5 h-5" />
         </button>
-
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          className="hidden"
+        
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          onChange={handleFileChange} 
+          className="hidden" 
           accept="image/*,.pdf,.doc,.docx,.txt"
           name="file"
         />
 
-        <div className="flex-1 relative">
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Ask anything..."
-            rows={1}
-            className="w-full bg-[#1a1a1a]/60 border border-[#9c6bff]/20 rounded-xl p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-[#9c6bff]/50 resize-none placeholder:text-[#e0e0e0]/30 transition-all duration-300"
-            style={{
-              minHeight: "50px",
-              maxHeight: "150px",
-            }}
-            onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault()
-                if (input.trim() || selectedFile) {
-                  // Call handleSubmit directly with the keyboard event
-                  handleSubmit(e)
-                }
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => handleInputChange(e as any)}
+          placeholder="Ask anything..."
+          className="flex-1 bg-transparent border-none outline-none text-[#e0e0e0] placeholder:text-[#e0e0e0]/30 py-2"
+          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault()
+              if (input.trim() || selectedFile) {
+                handleSubmit(e as any)
               }
-            }}
-          />
+            }
+          }}
+        />
 
-          <button
-            type="submit"
-            disabled={(!input.trim() && !selectedFile) || isLoading}
-            className="absolute right-3 bottom-3 p-1.5 rounded-full bg-[#9c6bff] text-white disabled:opacity-50 hover:bg-[#8a2be2] transition-all hover:shadow-[0_0_15px_rgba(156,107,255,0.5)] disabled:hover:bg-[#9c6bff] disabled:hover:shadow-none"
-          >
-            <SendHorizonal className="w-4 h-4" />
-          </button>
-        </div>
-
-        <button
-          type="button"
+        <button 
+          type="button" 
           onClick={startListening}
           className={`p-2 rounded-full transition-all ${
-            isListening ? "bg-[#9c6bff]/30 text-[#9c6bff] animate-pulse" : "hover:bg-white/5 text-[#e0e0e0]/50"
+            isListening 
+              ? 'bg-[#9c6bff]/30 text-[#9c6bff]' 
+              : 'hover:bg-white/5 text-[#e0e0e0]/50'
           }`}
+          aria-label="Voice input"
         >
           <Mic className="w-5 h-5" />
+        </button>
+
+        <button
+          type="submit"
+          disabled={(!input.trim() && !selectedFile) || isLoading}
+          className="p-2 rounded-full bg-[#9c6bff] text-white disabled:opacity-50 hover:bg-[#8a2be2] transition-all disabled:hover:bg-[#9c6bff]"
+          aria-label="Send message"
+        >
+          <SendHorizonal className="w-5 h-5" />
         </button>
       </div>
     </form>

@@ -96,8 +96,6 @@ lumi-ai-chat/
 │   └── nav-bar.tsx       # Navigation bar
 ├── hooks/                # Custom React hooks
 │   └── use-chat.tsx      # Chat state management
-├── public/               # Static assets
-│   └── grid-pattern.svg  # Background pattern
 ├── types/                # TypeScript type definitions
 │   ├── global.d.ts       # Global type declarations
 │   └── index.ts          # Type exports
