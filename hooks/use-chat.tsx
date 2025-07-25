@@ -44,7 +44,8 @@ export function useChat() {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to get response")
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || "Failed to get response")
       }
 
       const data = await response.json()
@@ -57,13 +58,15 @@ export function useChat() {
       }
 
       setMessages((prev) => [...prev, aiMessage])
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error:", error)
 
-      // Add error message
+      // Add error message with specific details
       const errorMessage: Message = {
         id: uuidv4(),
-        content: "This AI interface was developed for demonstration purposes. The AI backend runs locally and is not deployed for public use.",
+        content: error.message?.includes("Ollama") || error.message?.includes("model") 
+          ? error.message
+          : "I'm having trouble connecting right now. Please make sure Ollama is running with the Llama3 model installed. You can install it by running 'ollama pull llama3' in your terminal.",
         role: "assistant",
       }
 

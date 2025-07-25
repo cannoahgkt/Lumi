@@ -10,27 +10,35 @@ export default function Message({ message }: MessageProps) {
   const isUser = message.role === "user"
 
   return (
-    <div className={cn("flex gap-3 items-start", isUser && "justify-end")}>
+    <div className={cn("flex gap-4 items-start group", isUser && "justify-end")}>
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#9c6bff] to-[#00ffff]/70 flex items-center justify-center flex-shrink-0">
-          <Bot className="w-4 h-4 text-[#121212]" />
+        <div className="relative flex-shrink-0">
+          <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center shadow-lg">
+            <Bot className="w-5 h-5 text-white" />
+          </div>
+          <div className="absolute -inset-1 bg-primary/20 rounded-2xl blur-sm -z-10 group-hover:bg-primary/30 transition-colors"></div>
         </div>
       )}
 
       <div
         className={cn(
-          "max-w-[80%] rounded-xl p-3 shadow-sm",
+          "max-w-[75%] liquid-glass-card p-4 shadow-lg transition-all duration-300 group-hover:shadow-xl",
           isUser
-            ? "bg-[#9c6bff]/20 border border-[#9c6bff]/30 rounded-tr-none"
-            : "bg-[#1a1a1a]/60 border border-white/5 rounded-tl-none",
+            ? "rounded-tr-lg bg-primary/10 border-primary/20"
+            : "rounded-tl-lg",
         )}
       >
-        <p className="text-[#e0e0e0]">{message.content}</p>
+        <div className="prose prose-sm max-w-none">
+          <p className="text-foreground leading-relaxed m-0 whitespace-pre-wrap">{message.content}</p>
+        </div>
       </div>
 
       {isUser && (
-        <div className="w-8 h-8 rounded-full bg-[#e0e0e0]/10 flex items-center justify-center flex-shrink-0">
-          <User className="w-4 h-4 text-[#e0e0e0]" />
+        <div className="relative flex-shrink-0">
+          <div className="w-10 h-10 rounded-2xl liquid-glass flex items-center justify-center border border-border/50">
+            <User className="w-5 h-5 text-foreground" />
+          </div>
+          <div className="absolute -inset-1 bg-foreground/5 rounded-2xl blur-sm -z-10 group-hover:bg-foreground/10 transition-colors"></div>
         </div>
       )}
     </div>
