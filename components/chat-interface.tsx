@@ -3,11 +3,33 @@
 import { useRef, useEffect } from "react"
 import ChatInput from "./chat-input"
 import Message from "./message"
+import { ModelSelector } from "./model-selector"
+import { TemplateSelector } from "./template-selector"
+import { SettingsDialog } from "./settings-dialog"
 import { useChat } from "@/hooks/use-chat"
+import { getModelById } from "@/lib/providers"
+import { Button } from "./ui/button"
+import { Trash2 } from "lucide-react"
 
 export default function ChatInterface() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat()
+  const { 
+    messages, 
+    input, 
+    handleInputChange, 
+    handleSubmit, 
+    isLoading,
+    selectedModel,
+    selectedProvider,
+    selectedTemplate,
+    settings,
+    handleModelChange,
+    handleTemplateChange,
+    clearChat,
+    setSettings,
+  } = useChat()
+
+  const currentModel = getModelById(selectedModel)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -27,13 +49,52 @@ export default function ChatInterface() {
               <div className="absolute inset-0 w-4 h-4 rounded-full bg-primary/30 animate-ping"></div>
             </div>
             <div>
-              <h2 className="font-space-grotesk text-xl font-bold text-foreground">LLAMA 3</h2>
-              <p className="text-sm text-muted-foreground">AI Assistant • Online</p>
+              <h2 className="font-space-grotesk text-xl font-bold text-foreground">
+                {currentModel?.name || "LUMI AI"}
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                AI Assistant • {selectedProvider === "user-key" ? "Your API" : "Serverless"}
+              </p>
             </div>
           </div>
           
           <div className="liquid-glass rounded-xl px-4 py-2">
-            <span className="text-xs font-medium text-primary">POWERED BY OLLAMA</span>
+            <span className="text-xs font-medium text-primary">
+              {selectedProvider.toUpperCase()}
+            </span>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex items-center justify-between mt-4 gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
+            <ModelSelector
+              selectedModel={selectedModel}
+              selectedProvider={selectedProvider}
+              onModelChange={handleModelChange}
+            />
+            <TemplateSelector
+              selectedTemplate={selectedTemplate}
+              onTemplateChange={handleTemplateChange}
+            />
+          </div>
+          
+          <div className="flex items-center gap-2">
+            {messages.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={clearChat}
+                className="liquid-glass-button"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
+            <SettingsDialog
+              settings={settings}
+              onSettingsChange={setSettings}
+              onClearChat={clearChat}
+            />
           </div>
         </div>
       </div>
@@ -50,52 +111,59 @@ export default function ChatInterface() {
               </div>
               <div className="absolute -inset-4 bg-primary/10 rounded-full blur-xl -z-10"></div>
             </div>
-            
-            <h3 className="text-2xl font-bold mb-3 font-space-grotesk gradient-text">
-              LUMI AI ASSISTANT
+
+            <h3 className="text-2xl font-bold text-foreground mb-4 font-space-grotesk">
+              Welcome to LUMI AI
             </h3>
-            <p className="text-muted-foreground max-w-md leading-relaxed">
-              Powered by Llama 3 open-source model. Ask me anything about code, science, history, 
-              or creative writing. I'm here to help you explore and learn.
+            <p className="text-muted-foreground mb-8 max-w-md leading-relaxed">
+              Chat with advanced AI models including Claude, GPT-4, Llama, and more. 
+              Select a model above and start your conversation.
             </p>
-            
-            {/* Feature pills */}
-            <div className="flex flex-wrap gap-3 mt-8 justify-center">
-              {["Code Analysis", "Creative Writing", "Problem Solving", "Research"].map((feature) => (
-                <div key={feature} className="liquid-glass rounded-full px-4 py-2">
-                  <span className="text-sm text-muted-foreground">{feature}</span>
-                </div>
-              ))}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
+              <div className="liquid-glass p-4 rounded-xl hover:scale-105 transition-transform cursor-pointer">
+                <h4 className="font-semibold text-sm mb-2">💡 Ask anything</h4>
+                <p className="text-xs text-muted-foreground">
+                  General questions, creative writing, brainstorming
+                </p>
+              </div>
+              <div className="liquid-glass p-4 rounded-xl hover:scale-105 transition-transform cursor-pointer">
+                <h4 className="font-semibold text-sm mb-2">💻 Code help</h4>
+                <p className="text-xs text-muted-foreground">
+                  Debug, explain, review, and improve your code
+                </p>
+              </div>
+              <div className="liquid-glass p-4 rounded-xl hover:scale-105 transition-transform cursor-pointer">
+                <h4 className="font-semibold text-sm mb-2">📝 Writing tasks</h4>
+                <p className="text-xs text-muted-foreground">
+                  Emails, summaries, essays, and content creation
+                </p>
+              </div>
+              <div className="liquid-glass p-4 rounded-xl hover:scale-105 transition-transform cursor-pointer">
+                <h4 className="font-semibold text-sm mb-2">🎯 Use templates</h4>
+                <p className="text-xs text-muted-foreground">
+                  Pre-built prompts for common tasks and workflows
+                </p>
+              </div>
             </div>
           </div>
         ) : (
           <>
-            {messages.map((message) => <Message key={message.id} message={message} />)}
-            
-            {/* Loading indicator */}
+            {messages.map((message) => (
+              <Message key={message.id} message={message} />
+            ))}
             {isLoading && (
-              <div className="flex gap-4 items-start">
-                <div className="relative flex-shrink-0">
-                  <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center shadow-lg">
-                    <div className="w-5 h-5 text-white">
-                      <div className="flex space-x-1 justify-center items-center">
-                        <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                        <div className="w-1 h-1 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                      </div>
+              <div className="flex justify-start">
+                <div className="max-w-[80%] liquid-glass-message rounded-3xl px-6 py-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                      <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                      <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }}></div>
                     </div>
-                  </div>
-                  <div className="absolute -inset-1 bg-primary/20 rounded-2xl blur-sm -z-10"></div>
-                </div>
-                
-                <div className="max-w-[75%] liquid-glass-card p-4 shadow-lg rounded-tl-lg">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
-                      <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                      <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                    </div>
-                    <span className="text-sm">LUMI is thinking...</span>
+                    <span className="text-sm text-muted-foreground">
+                      {currentModel?.name || "AI"} is thinking...
+                    </span>
                   </div>
                 </div>
               </div>
@@ -107,11 +175,10 @@ export default function ChatInterface() {
 
       {/* Input area */}
       <div className="relative p-6 border-t border-border/50">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         <ChatInput
           input={input}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
+          onInputChange={handleInputChange}
+          onSubmit={handleSubmit}
           isLoading={isLoading}
         />
       </div>

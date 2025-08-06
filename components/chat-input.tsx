@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button"
 
 interface ChatInputProps {
   input: string
-  handleInputChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
-  handleSubmit: (e: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>) => void
+  onInputChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  onSubmit: (e?: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>) => void
   isLoading: boolean
 }
 
-export default function ChatInput({ input, handleInputChange, handleSubmit, isLoading }: ChatInputProps) {
+export default function ChatInput({ input, onInputChange, onSubmit, isLoading }: ChatInputProps) {
   const [isListening, setIsListening] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [filePreview, setFilePreview] = useState<string | null>(null)
@@ -96,7 +96,7 @@ export default function ChatInput({ input, handleInputChange, handleSubmit, isLo
     e.preventDefault()
 
     if (input.trim() || selectedFile) {
-      handleSubmit(e)
+      onSubmit(e)
       removeFile()
     }
   }
@@ -153,7 +153,7 @@ export default function ChatInput({ input, handleInputChange, handleSubmit, isLo
             <textarea
               ref={textareaRef}
               value={input}
-              onChange={(e) => handleInputChange(e as any)}
+              onChange={(e) => onInputChange(e as any)}
               placeholder="Ask anything..."
               className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground py-2 px-2 resize-none min-h-[20px] max-h-32 leading-6"
               rows={1}
@@ -161,7 +161,7 @@ export default function ChatInput({ input, handleInputChange, handleSubmit, isLo
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault()
                   if (input.trim() || selectedFile) {
-                    handleSubmit(e as any)
+                    onSubmit(e as any)
                     removeFile()
                   }
                 }

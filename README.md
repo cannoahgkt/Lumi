@@ -1,28 +1,232 @@
 # LUMI AI Chat Interface
 
-A modern, futuristic AI chat interface featuring liquid glass design inspired by iOS 26 aesthetics. Built with Next.js and featuring both light and dark themes.
+A modern, serverless AI chat interface featuring liquid glass design inspired by iOS 26 aesthetics. Chat with multiple AI models including Claude, GPT-4, Llama, and more - **no installation required!**
 
 ## ✨ Features
 
-- 🤖 **AI Integration**: Seamless integration with Ollama's Llama 3 model
+- 🤖 **Multiple AI Models**: Access Claude 3.5, GPT-4, Llama 3.1, Mixtral, and more
+- 🌐 **Serverless**: Works instantly for anyone - no local setup required
 - 🎨 **Liquid Glass Design**: Modern glassmorphism effects with iOS 26-inspired aesthetics
 - 🌓 **Theme System**: Beautiful light (creamy white) and dark modes with smooth transitions
+- 🔧 **Model Switching**: Change AI models mid-conversation without losing context
+- 📝 **Prompt Templates**: 10+ built-in templates for coding, writing, and productivity
+- 🔑 **Flexible API Keys**: Use our serverless providers or bring your own OpenAI key
+- ⚙️ **Advanced Controls**: Adjust temperature, token limits, and model parameters
+- 💾 **Auto-Save**: Conversations automatically saved locally
+- 📱 **Responsive**: Optimized for all screen sizes and devices
 - 🔊 **Voice Input**: Speech-to-text functionality for hands-free interaction
 - 📎 **File Upload**: Support for image and document uploads with preview
-- 📱 **Responsive**: Optimized for all screen sizes and devices
-- ⚡ **Real-time**: Instant chat responses with message history
-- 🎭 **Animations**: Smooth transitions and modern micro-interactions
 
-## 🚀 Quick Deploy to Vercel
+## � Quick Deploy to Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cannoahgkt/Lumi)
 
+## 🌐 Live Demo
+
+Visit the live demo: [Your Vercel URL here]
+
+**Try it now** - no installation required! Just open the link and start chatting with advanced AI models.
+
 ## 📋 Prerequisites
 
-Before you begin, ensure you have:
+For deployment:
 - [Node.js](https://nodejs.org/) (v18 or newer)
-- [Ollama](https://ollama.ai/download) installed and running
-- Llama 3 model pulled to your Ollama instance
+- API keys from [OpenRouter](https://openrouter.ai) and/or [Groq](https://console.groq.com)
+
+For users: **Nothing!** Just visit the website and start chatting.
+
+## 🛠️ Installation (For Developers)
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/cannoahgkt/Lumi.git
+   cd Lumi
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables:**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env.local
+   
+   # Edit .env.local and add your API keys
+   OPENROUTER_API_KEY=your_openrouter_key_here
+   GROQ_API_KEY=your_groq_key_here
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   ```
+
+4. **Get API Keys:**
+   
+   **OpenRouter (Recommended):**
+   - Visit [openrouter.ai](https://openrouter.ai)
+   - Sign up and get your API key
+   - Access Claude, GPT-4, Llama, and 100+ models
+   
+   **Groq (Fastest):**
+   - Visit [console.groq.com](https://console.groq.com)
+   - Sign up and get your API key
+   - Ultra-fast inference with Llama models
+
+## 🏃‍♂️ Running Locally
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🚀 Deploy to Vercel
+
+### Method 1: One-Click Deploy
+Click the deploy button above or use this link:
+[Deploy to Vercel](https://vercel.com/new/clone?repository-url=https://github.com/cannoahgkt/Lumi)
+
+### Method 2: Manual Deploy
+1. **Push to GitHub** (if not already done)
+2. **Connect to Vercel:**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign in with GitHub
+   - Click "New Project"
+   - Import your Lumi repository
+
+3. **Add Environment Variables in Vercel:**
+   ```
+   OPENROUTER_API_KEY=your_key_here
+   GROQ_API_KEY=your_key_here
+   NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+   ```
+
+4. **Deploy!** Your app will be live instantly.
+
+## 🎯 How to Use
+
+### **For Visitors**
+1. Open the website
+2. Select an AI model from the dropdown
+3. Choose a prompt template (optional)
+4. Start chatting immediately!
+
+### **Available Models**
+- **Claude 3.5 Sonnet**: Anthropic's most capable model
+- **GPT-4o**: OpenAI's latest multimodal model  
+- **Llama 3.1 405B**: Meta's largest open model
+- **Mixtral 8x7B**: Mistral's mixture of experts
+- **Gemini Pro 1.5**: Google's multimodal model
+- **And many more!**
+
+### **Prompt Templates**
+- 💻 **Code Help**: Explain, review, and debug code
+- 📝 **Writing**: Emails, summaries, content creation
+- 🎓 **Learning**: Explain concepts, translate text
+- 💡 **Creative**: Brainstorming and ideation
+- 🛠 **Productivity**: Professional tasks and optimization
+
+### **Advanced Features**
+- **Model Switching**: Change models mid-conversation
+- **Custom API Keys**: Add your OpenAI key for GPT-4 access
+- **Parameter Control**: Adjust temperature and response length
+- **Chat History**: Conversations auto-saved locally
+- **Template System**: Quick prompts for common tasks
+
+## 🏗️ Architecture
+
+```
+User Request
+    ↓
+Next.js Frontend
+    ↓
+Serverless API (/api/chat)
+    ↓
+Provider Router
+    ├── OpenRouter → Claude, GPT-4, Llama, etc.
+    ├── Groq → Ultra-fast Llama inference  
+    └── User's OpenAI Key → GPT-4 with user quota
+```
+
+## 🔒 Security & Privacy
+
+- **Rate Limited**: 20 requests per minute per IP
+- **Secure API Keys**: Your keys stay on your server
+- **Local Storage**: User API keys stored locally only
+- **No Data Collection**: Conversations not stored server-side
+- **Environment Protected**: Sensitive data in environment variables
+
+## 🎨 Customization
+
+The app features two beautiful themes:
+- **Light Mode**: Creamy white backgrounds with warm tones
+- **Dark Mode**: Deep blues with futuristic glassmorphism effects
+
+Toggle themes using the sun/moon icon in the navigation bar.
+
+## 🚀 Future Features
+
+The modular architecture supports easy addition of:
+- 📎 **File Upload**: Images, PDFs, code files
+- 🔗 **GitHub Integration**: Repository analysis and code review
+- 🦙 **Local Ollama**: Fallback mode for offline usage
+- 👥 **Team Features**: Shared conversations and templates
+- 📊 **Analytics**: Usage insights and model performance
+- 🎙️ **Voice Chat**: Audio input and output
+
+## 🔧 Troubleshooting
+
+### No Response from AI
+1. Check that you've added API keys to `.env.local`
+2. Verify your API keys are valid
+3. Try a different model/provider
+4. Check the browser console for errors
+
+### Rate Limiting
+- The app limits requests to prevent abuse
+- Wait a minute before trying again
+- Deploy your own instance for higher limits
+
+### Model Not Available
+- Some models may be temporarily unavailable
+- Try switching to a different model
+- Check the provider's status page
+
+## 💰 Costs
+
+### Free Tier
+- **OpenRouter**: Limited free usage for testing
+- **Groq**: Generous free tier with fast Llama models
+
+### Paid Usage (Pay-per-use)
+- **OpenRouter**: ~$0.50-$2 per 1M tokens (varies by model)
+- **Groq**: ~$0.10-$0.30 per 1M tokens
+- **User's OpenAI Key**: Direct OpenAI pricing
+
+**Estimated costs**: $1-10/month for moderate usage
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## 📄 License
+
+[MIT](LICENSE)
+
+## 🙏 Acknowledgements
+
+- [OpenRouter](https://openrouter.ai/) for unified AI model access
+- [Groq](https://groq.com/) for ultra-fast inference
+- [Anthropic](https://anthropic.com/) for Claude models
+- [OpenAI](https://openai.com/) for GPT models
+- [Meta](https://ai.meta.com/) for open-source Llama models
+- [Vercel](https://vercel.com/) for seamless deployment
+- [Next.js](https://nextjs.org/) for the React framework
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Radix UI](https://radix-ui.com/) for accessible components
 
 ## 🛠️ Installation
 
