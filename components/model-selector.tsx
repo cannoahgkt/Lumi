@@ -67,48 +67,56 @@ export function ModelSelector({ selectedModel, selectedProvider, onModelChange }
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="start" 
-        className="w-80 liquid-glass-card"
+        side="bottom"
+        sideOffset={8}
+        className="w-80 liquid-glass-card max-h-[70vh] overflow-hidden"
+        avoidCollisions={true}
+        collisionPadding={8}
       >
-        {AI_PROVIDERS.map((provider) => (
-          <div key={provider.id}>
-            <DropdownMenuLabel className="flex items-center gap-2 py-3">
-              {getProviderIcon(provider.id)}
-              <span>{provider.name}</span>
-              <Badge 
-                variant="outline" 
-                className={`text-xs ${getProviderBadgeColor(provider.id)}`}
-              >
-                {provider.apiKeyRequired ? "Your Key" : "Free"}
-              </Badge>
-            </DropdownMenuLabel>
-            
-            {provider.models.map((model) => (
-              <DropdownMenuItem
-                key={model.id}
-                onClick={() => onModelChange(model.id, provider.id)}
-                className={`flex flex-col items-start gap-1 py-3 px-3 ${
-                  selectedModel === model.id ? "bg-accent" : ""
-                }`}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <span className="font-medium">{model.name}</span>
-                  {model.contextLength && (
-                    <Badge variant="secondary" className="text-xs">
-                      {model.contextLength.toLocaleString()} tokens
-                    </Badge>
+        <div className="max-h-[60vh] overflow-y-auto overscroll-contain">
+          {AI_PROVIDERS.map((provider, providerIndex) => (
+            <div key={provider.id}>
+              <DropdownMenuLabel className="flex items-center gap-2 py-3 sticky top-0 bg-background/95 backdrop-blur-sm z-10 border-b border-border/50">
+                {getProviderIcon(provider.id)}
+                <span>{provider.name}</span>
+                <Badge 
+                  variant="outline" 
+                  className={`text-xs ${getProviderBadgeColor(provider.id)}`}
+                >
+                  {provider.apiKeyRequired ? "Your Key" : "Free"}
+                </Badge>
+              </DropdownMenuLabel>
+              
+              {provider.models.map((model) => (
+                <DropdownMenuItem
+                  key={model.id}
+                  onClick={() => onModelChange(model.id, provider.id)}
+                  className={`flex flex-col items-start gap-1 py-3 px-3 cursor-pointer hover:bg-accent/80 transition-colors ${
+                    selectedModel === model.id ? "bg-accent" : ""
+                  }`}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span className="font-medium">{model.name}</span>
+                    {model.contextLength && (
+                      <Badge variant="secondary" className="text-xs">
+                        {model.contextLength.toLocaleString()} tokens
+                      </Badge>
+                    )}
+                  </div>
+                  {model.description && (
+                    <span className="text-xs text-muted-foreground line-clamp-2">
+                      {model.description}
+                    </span>
                   )}
-                </div>
-                {model.description && (
-                  <span className="text-xs text-muted-foreground">
-                    {model.description}
-                  </span>
-                )}
-              </DropdownMenuItem>
-            ))}
-            
-            <DropdownMenuSeparator />
-          </div>
-        ))}
+                </DropdownMenuItem>
+              ))}
+              
+              {providerIndex < AI_PROVIDERS.length - 1 && (
+                <DropdownMenuSeparator className="my-1" />
+              )}
+            </div>
+          ))}
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   )
