@@ -69,7 +69,7 @@ export function ModelSelector({ selectedModel, selectedProvider, onModelChange }
         align="start" 
         side="bottom"
         sideOffset={8}
-        className="w-80 liquid-glass-card max-h-[70vh] overflow-hidden"
+        className="w-80 max-h-[70vh] overflow-hidden liquid-glass-card"
         avoidCollisions={true}
         collisionPadding={8}
       >
@@ -91,8 +91,8 @@ export function ModelSelector({ selectedModel, selectedProvider, onModelChange }
                 <DropdownMenuItem
                   key={model.id}
                   onClick={() => onModelChange(model.id, provider.id)}
-                  className={`flex flex-col items-start gap-1 py-3 px-3 cursor-pointer hover:bg-accent/80 transition-colors ${
-                    selectedModel === model.id ? "bg-accent" : ""
+                  className={`flex flex-col items-start gap-1 py-3 px-3 cursor-pointer hover:bg-white/5 transition-colors ${
+                    selectedModel === model.id ? "bg-primary/20" : ""
                   }`}
                 >
                   <div className="flex items-center justify-between w-full">

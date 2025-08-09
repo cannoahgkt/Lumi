@@ -81,7 +81,7 @@ export function TemplateSelector({ selectedTemplate, onTemplateChange }: Templat
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="start" 
-        className="w-80 liquid-glass-card max-h-96 overflow-y-auto"
+        className="w-80 max-h-96 overflow-y-auto liquid-glass-card"
       >
         {TEMPLATE_CATEGORIES.map((category) => {
           const templates = templatesByCategory[category]
@@ -89,7 +89,7 @@ export function TemplateSelector({ selectedTemplate, onTemplateChange }: Templat
 
           return (
             <div key={category}>
-              <DropdownMenuLabel className="flex items-center gap-2 py-3 capitalize">
+              <DropdownMenuLabel className="flex items-center gap-2 py-3 capitalize sticky top-0 bg-background/95 backdrop-blur-sm z-10 border-b border-border/50">
                 {getCategoryIcon(category)}
                 <span>{category}</span>
                 <Badge 
@@ -104,8 +104,8 @@ export function TemplateSelector({ selectedTemplate, onTemplateChange }: Templat
                 <DropdownMenuItem
                   key={template.id}
                   onClick={() => onTemplateChange(template.id)}
-                  className={`flex flex-col items-start gap-1 py-3 px-3 ${
-                    selectedTemplate === template.id ? "bg-accent" : ""
+                  className={`flex flex-col items-start gap-1 py-3 px-3 cursor-pointer hover:bg-white/5 transition-colors ${
+                    selectedTemplate === template.id ? "bg-primary/20" : ""
                   }`}
                 >
                   <span className="font-medium">{template.name}</span>

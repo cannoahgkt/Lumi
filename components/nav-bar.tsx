@@ -48,13 +48,17 @@ export default function NavBar() {
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="liquid-glass rounded-xl h-10 w-10 hover:scale-110 transition-all duration-300 border-0"
+            className="liquid-glass-button rounded-xl h-10 w-10 hover:scale-110 transition-all duration-300 border-0 group"
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
           >
-            {theme === "dark" ? (
-              <Sun className="w-5 h-5 text-primary" />
-            ) : (
-              <Moon className="w-5 h-5 text-primary" />
-            )}
+            <div className="relative">
+              {theme === "dark" ? (
+                <Sun className="w-5 h-5 text-primary group-hover:text-yellow-400 transition-colors duration-200" />
+              ) : (
+                <Moon className="w-5 h-5 text-primary group-hover:text-blue-400 transition-colors duration-200" />
+              )}
+              <div className="absolute inset-0 w-5 h-5 rounded-full bg-primary/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
             <span className="sr-only">Toggle theme</span>
           </Button>
 
@@ -62,15 +66,16 @@ export default function NavBar() {
             variant="ghost"
             size="icon"
             asChild
-            className="liquid-glass rounded-xl h-10 w-10 hover:scale-110 transition-all duration-300 border-0"
+            className="liquid-glass-button rounded-xl h-10 w-10 hover:scale-110 transition-all duration-300 border-0 group"
+            title="About AI Models"
           >
             <a
-              href="https://ollama.ai"
+              href="https://openrouter.ai"
               target="_blank"
               rel="noopener noreferrer"
-              title="About Ollama"
             >
-              <Info className="w-5 h-5 text-primary" />
+              <Info className="w-5 h-5 text-primary group-hover:text-cyan-400 transition-colors duration-200" />
+              <div className="absolute inset-0 w-5 h-5 rounded-full bg-primary/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
           </Button>
         </div>
