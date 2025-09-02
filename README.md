@@ -23,7 +23,7 @@ A modern, serverless AI chat interface featuring liquid glass design inspired by
 
 ## 🌐 Live Demo
 
-Visit the live demo: [Your Vercel URL here]
+Visit the live demo: https://lumi-pi.vercel.app/
 
 **Try it now** - no installation required! Just open the link and start chatting with advanced AI models.
 
